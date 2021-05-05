@@ -10,7 +10,23 @@ import UIKit
  
  Напишите проваливающийся инициализатор, который в качестве параметров принимает время начала и окончания разминки, а затем проверяет, не отстоят ли они друг от друга ближе, чем 10 секунд.  Если это так, ваш инициализатор должен провалиться.  В противном случае, он должен выставить нужные свойства.
  */
+struct Workout {
+    let startTime: Double
+    let endTime: Double
+    
+    init(startTime:Double, endTime:Double) {
+        self.startTime = startTime
+        self.endTime = endTime
+        
+        guard (endTime - startTime) > 10 else {
+            print("Тренировка не защитана")
+            return
+        }
+        print("Тренировка защитана")
+    }
+}
 
+Workout(startTime: 28800, endTime: 28810)
 
 /*:
  Вы программируете экран отслеживания съеденной еды, где пользователь вводит список поглощённых блюд.  Если пользователь нажимает на кнопку "сохранить" без ввода блюд, вы хотите попросить пользователя заполнить поля ввода.
@@ -26,8 +42,17 @@ let foodTextField = UITextField()
 let caloriesTextField = UITextField()
 
 foodTextField.text = "Banana"
-caloriesTextField.text = "23"
+caloriesTextField.text = "ро"
 
+func logFood() -> Food? {
+    guard let foodTextFieldValue = foodTextField.text, let caloriesTextFieldValue = Int(caloriesTextField.text!) else {return nil}
+    
+     return Food(name: foodTextFieldValue, calories: caloriesTextFieldValue)
+}
+
+let todayFood = logFood()
+
+    print( "Вы поглатили \(todayFood!.name) \(todayFood!.calories) калории")
 
 /*:
  Вызовите созданную вами функцию и сохраните возвращённое ей значение.  Извлеките объект типа `Food` стандартной процедурой привязки опционалов и напечатайте предложение о поглощённой еде, используя полученные свойства.  Попробуйте поменять текст в `caloriesTextField` на строку, которая не может быть конвертирована в число.  Что произойдёт в данном случае?
